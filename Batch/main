@@ -1,0 +1,52 @@
+%%% 
+%Batch Script 
+%%% 
+
+dir = '/Users/fabiusberner/Documents/MATLAB/' %Hier das directory festlegen, in dem SPM, Funktionen und Daten zu finden sind
+
+% Reihenfolge: Realign, coregister, segment, normalise, smooth 
+
+v = [1,1,1,1,1] % Vektor aus Nullen und Einsen, um festzulegen, 
+% was durchgeführt werden soll
+
+
+
+%% Realign 
+
+switch v(1)
+    case 1
+        realign_spm(dir)
+
+    otherwise 
+end
+
+%% Cogeristration 
+
+switch v(2)
+    case 1 
+        coregister_spm(dir)
+    otherwise
+end
+
+%% Segment 
+
+switch v(3)
+    case 1 
+        segment_spm(dir)
+    otherwise
+end
+
+%% Normalise 
+
+switch v(4)
+    case 1 
+        normalise_spm(dir)
+    otherwise
+end
+
+%% Smooth 
+switch v(5) 
+    case 1 
+        smooth_spm(dir)
+    otherwise
+end
