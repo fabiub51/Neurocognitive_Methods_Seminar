@@ -40,7 +40,7 @@ switch v(1)
         realign_estimate_reslice.matlabbatch{1}.spm.spatial.realign.estwrite.roptions.wrap = [0 0 0];
         realign_estimate_reslice.matlabbatch{1}.spm.spatial.realign.estwrite.roptions.mask = 1;
         realign_estimate_reslice.matlabbatch{1}.spm.spatial.realign.estwrite.roptions.prefix = 'r';
-        spm_jobman('run', realign_estimate_reslice.matlabbatch, inputs{:});
+        spm_jobman('run', realign_estimate_reslice.matlabbatch);
     otherwise
 end
 
@@ -52,6 +52,7 @@ switch v(2)
         source_file = spm_select('List',source_dir,'^s','.img');
         ref_file_s = cellstr([repmat([data_dir filesep], size(ref_file,1), 1) ref_file, repmat(',1',size(ref_file,1),1)]);
         source_file_s = cellstr([repmat([source_dir filesep], size(source_file,1), 1) source_file, repmat(',1',size(source_file,1),1)]);
+        
         coregister.matlabbatch{1}.spm.spatial.coreg.estimate.ref = ref_file_s;
         coregister.matlabbatch{1}.spm.spatial.coreg.estimate.source = source_file_s;
         coregister.matlabbatch{1}.spm.spatial.coreg.estimate.other = {''};
@@ -59,7 +60,7 @@ switch v(2)
         coregister.matlabbatch{1}.spm.spatial.coreg.estimate.eoptions.sep = [4 2];
         coregister.matlabbatch{1}.spm.spatial.coreg.estimate.eoptions.tol = [0.02 0.02 0.02 0.001 0.001 0.001 0.01 0.01 0.01 0.001 0.001 0.001];
         coregister.matlabbatch{1}.spm.spatial.coreg.estimate.eoptions.fwhm = [7 7];
-        spm_jobman('run', coregister.matlabbatch, inputs{:});
+        spm_jobman('run', coregister.matlabbatch);
     otherwise
 end
 
@@ -124,7 +125,7 @@ switch v(3)
         segmentation.matlabbatch{1}.spm.spatial.preproc.warp.vox = NaN;
         segmentation.matlabbatch{1}.spm.spatial.preproc.warp.bb = [NaN NaN NaN
                                                       NaN NaN NaN];
-        spm_jobman('run', segmentation.matlabbatch, inputs{:});
+        spm_jobman('run', segmentation.matlabbatch);
 
     otherwise
 end
@@ -163,7 +164,49 @@ switch v(5)
         smooth.matlabbatch{1}.spm.spatial.smooth.dtype = 0;
         smooth.matlabbatch{1}.spm.spatial.smooth.im = 0;
         smooth.matlabbatch{1}.spm.spatial.smooth.prefix = 's';
-        spm_jobman('run', smooth.matlabbatch, inputs{:});
+        spm_jobman('run', smooth.matlabbatch);
 
     otherwise
 end
+
+%% Specification - first level analysis 
+
+% Specify the folder you want to save the files to (your own auditory -
+% classical folder
+specification = struct; 
+specification.matlabbatch{1}.spm.stats.fmri_spec.dir = {'/Users/fabiusberner/Documents/MATLAB/auditory/classical'};
+specification.matlabbatch{1}.spm.stats.fmri_spec.timing.units = 'scans';
+specification.matlabbatch{1}.spm.stats.fmri_spec.timing.RT = 7;
+specification.matlabbatch{1}.spm.stats.fmri_spec.timing.fmri_t = 16;
+specification.matlabbatch{1}.spm.stats.fmri_spec.timing.fmri_t0 = 8;
+
+
+specification_files = spm_select('List',data_dir,'^sw','.img');
+specification_fs = cellstr([repmat([data_dir filesep], size(specification_files,1), 1) specification_files, repmat(',1',size(specification_files,1),1)]);
+        
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.scans = specification_fs;
+
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.cond.name = 'listening';
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.cond.onset = [6
+                                                      18
+                                                      30
+                                                      42
+                                                      54
+                                                      66
+                                                      78];
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.cond.duration = 6;
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.cond.tmod = 0;
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.cond.pmod = struct('name', {}, 'param', {}, 'poly', {});
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.cond.orth = 1;
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.multi = {''};
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.regress = struct('name', {}, 'val', {});
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.multi_reg = {''};
+specification.matlabbatch{1}.spm.stats.fmri_spec.sess.hpf = 128;
+specification.matlabbatch{1}.spm.stats.fmri_spec.fact = struct('name', {}, 'levels', {});
+specification.matlabbatch{1}.spm.stats.fmri_spec.bases.hrf.derivs = [0 0];
+specification.matlabbatch{1}.spm.stats.fmri_spec.volt = 1;
+specification.matlabbatch{1}.spm.stats.fmri_spec.global = 'None';
+specification.matlabbatch{1}.spm.stats.fmri_spec.mthresh = 0.8;
+specification.matlabbatch{1}.spm.stats.fmri_spec.mask = {''};
+specification.matlabbatch{1}.spm.stats.fmri_spec.cvi = 'AR(1)';
+spm_jobman('run', specification.matlabbatch);
