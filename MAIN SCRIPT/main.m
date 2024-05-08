@@ -23,7 +23,7 @@ switch v(1)
     case 1
         realign_estimate_reslice = struct; 
         files = spm_select('List',data_dir,'^fM','.img');
-        fs = cellstr([repmat([data_dir filesep], size(files,1), 1) files, repmat(',1',size(files,1),1)]);
+        fs = cellstr([repmat([data_dir filesep], size(files,1), 1) files, repmat(',1',size(files,1),1)]); %formed in the SPM style
         
         %Eoptions
         realign_estimate_reslice.matlabbatch{1}.spm.spatial.realign.estwrite.data = {fs};
