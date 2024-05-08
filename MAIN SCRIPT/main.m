@@ -87,7 +87,7 @@ switch v(3)
         tpm_file_6 = spm_select('List',tpm_path,'^T','.nii');
         tpm_file_6s = cellstr([repmat([tpm_path filesep], size(tpm_file_6,1), 1) tpm_file_6, repmat(',6',size(tpm_file_6,1),1)]);
         
-        segmentation.matlabbatch{1}.spm.spatial.preproc.channel.vols = source_file_s; % WHY?
+        segmentation.matlabbatch{1}.spm.spatial.preproc.channel.vols = source_file_s; % 
         segmentation.matlabbatch{1}.spm.spatial.preproc.channel.biasreg = 0.001;
         segmentation.matlabbatch{1}.spm.spatial.preproc.channel.biasfwhm = 60;
         segmentation.matlabbatch{1}.spm.spatial.preproc.channel.write = [0 1];
