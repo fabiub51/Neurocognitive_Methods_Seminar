@@ -1,5 +1,6 @@
 function segment_pre(tpm_path, source_dir)
 
+segmentation = struct;
 source_file = spm_select('List',source_dir,'^s','.img');
 source_file_s = cellstr([repmat([source_dir filesep], size(source_file,1), 1) source_file, repmat(',1',size(source_file,1),1)]);
 
