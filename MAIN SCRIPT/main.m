@@ -19,7 +19,7 @@ source_dir = '/Users/fabiusberner/Documents/MATLAB/auditory/MoAEpilot/sM00223'; 
 tpm_path = '/Users/fabiusberner/Documents/MATLAB/SPM12/tpm'; %This is the directory for NIFTI files for segmentation
 class_dir = '/Users/fabiusberner/Documents/MATLAB/auditory/classical'; %The directory classical
 %% Realignment 
-clean matlabbatch 
+clear matlabbatch 
 switch v(1)
     case 1
         realignment_pre(data_dir);
@@ -45,7 +45,7 @@ end
 %% Normalize 
 switch v(4)
     case 1
-        normalise_pre(source_dir);
+        normalise_pre(data_dir,source_dir);
     otherwise
 end
 
