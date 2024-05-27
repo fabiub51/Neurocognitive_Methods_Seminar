@@ -59,8 +59,6 @@ end
 
 %% Specification - first level analysis 
 
-% Specify the folder you want to save the files to (your own auditory -
-% classical folder)
 specification(data_dir, class_dir);
 
 %% Estimation
