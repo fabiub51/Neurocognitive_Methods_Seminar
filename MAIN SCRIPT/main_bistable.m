@@ -12,7 +12,7 @@ addpath(genpath([pwd,'/SPM12'])) %This ensures your SPM12 is loaded and running
 v = [1,1,1,1,1]; 
 
 %all participants
-subs = 1;
+subs = 4;
 runs = [1,2,3,4,5,6,7];
 
 %% Establishing directories where the data are
