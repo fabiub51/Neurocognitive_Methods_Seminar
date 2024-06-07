@@ -17,31 +17,28 @@ runs = [1,2,3,4,5,6,7];
 
 %% Establishing directories where the data are
 tpm_path = '/Users/fabiusberner/Documents/MATLAB/SPM12/tpm';
+pre_data_dir = '/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00';
 %% Realignment 
 clear matlabbatch 
 
 for i = 1:length(subs)
-    for r = 1:length(runs)
-        data_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/run_0',num2str(r));
+        data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-');
         switch v(1)
             case 1
-                B01_realignment(data_dir);
+                B01_realignment(data_dir,length(runs));
             otherwise
         end
-    end
 end
 %% Coregistration
 
 for i = 1:length(subs)
-    for r = 1:length(runs)
-        data_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/run_0',num2str(r));
+        ref_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/run-01');
         source_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/anat');
         switch v(2)
             case 1
-                B02_coregister(data_dir, source_dir);
+                B02_coregister(ref_dir, source_dir);
             otherwise
         end
-    end
 end
 %% Segmentation
 for i = 1:length(subs)
@@ -56,27 +53,23 @@ end
 %% Normalize 
 
 for i = 1:length(subs)
-    for r = 1:length(runs)
-        data_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/run_0',num2str(r));
+        data_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/run_');
         source_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/anat');
         switch v(4)
             case 1
-                B04_normalise(data_dir,source_dir);
+                B04_normalise(data_dir,source_dir,length(runs));
             otherwise
         end
-    end
 end
 %% Smoothing
 
 for i = 1:length(subs)
-    for r = 1:length(runs)
-        data_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/run_0',num2str(r));
+        data_dir = strcat('/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00',num2str(subs(i)),'/func/Preprocessing/run_');
         switch v(5)
             case 1
-                B05_smoothing(data_dir);
+                B05_smoothing(data_dir,length(runs));
             otherwise
         end
-    end
 end
 %% Specification - first level analysis 
 
