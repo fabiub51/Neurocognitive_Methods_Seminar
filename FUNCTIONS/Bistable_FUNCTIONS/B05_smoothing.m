@@ -1,11 +1,28 @@
-function B05_smoothing(data_dir)
+function B05_smoothing(data_dir,no_runs)
 
-smooth = struct; 
-files_w = spm_select('List',data_dir,'^w','.nii');
-fs_w = cellstr([repmat([data_dir filesep], size(files_w,1), 1) files_w, repmat(',1',size(files_w,1),1)]);
-          
-smooth.matlabbatch{1}.spm.spatial.smooth.data = fs_w;
-smooth.matlabbatch{1}.spm.spatial.smooth.fwhm = [6 6 6];
+
+%% Functional images
+
+file_dir = {};
+for r = 1:no_runs
+    if no_runs < 10
+        file_dir{r} = strcat(data_dir,num2str(0),num2str(r));
+    else
+        file_dir{r} = strcat(data_dir,num2str(r));
+    end
+end
+
+data_s = {};
+for f = 1:no_runs
+    fs = spm_select('List', file_dir{f}, '^wrM','.nii');
+    files = cellstr([repmat([file_dir{f} filesep], size(fs,1), 1) fs, repmat(',1',size(fs,1),1)]);
+    data_s = vertcat(data_n,files);
+end
+
+%% Fill matlabbatch
+
+smooth.matlabbatch{1}.spm.spatial.smooth.data = data_s;
+smooth.matlabbatch{1}.spm.spatial.smooth.fwhm = [8 8 8];
 smooth.matlabbatch{1}.spm.spatial.smooth.dtype = 0;
 smooth.matlabbatch{1}.spm.spatial.smooth.im = 0;
 smooth.matlabbatch{1}.spm.spatial.smooth.prefix = 's';
