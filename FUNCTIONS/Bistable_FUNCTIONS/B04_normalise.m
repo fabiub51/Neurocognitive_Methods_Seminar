@@ -1,16 +1,37 @@
-function B04_normalise(data_dir,source_dir)
+function B04_normalise(data_dir,source_dir,no_runs)
 
 normalise = struct; 
-files_n = spm_select('List',data_dir,'^M','.nii');
-fs_n = cellstr([repmat([data_dir filesep], size(files_n,1), 1) files_n, repmat(',1',size(files_n,1),1)]);
-def_file = spm_select('List',source_dir,'^y','.nii');
-def_n = cellstr([repmat([source_dir filesep], size(def_file,1), 1) def_file]);
-        
-normalise.matlabbatch{1}.spm.spatial.normalise.write.subj.def = def_n;
-normalise.matlabbatch{1}.spm.spatial.normalise.write.subj.resample = fs_n;
+
+%% Anatomical image
+
+source_file = spm_select('List',source_dir,'^y','.nii');
+source_file_s = cellstr([repmat([source_dir filesep], size(source_file,1), 1) source_file]);
+
+%% Functional images
+
+file_dir = {};
+for r = 1:no_runs
+    if no_runs < 10
+        file_dir{r} = strcat(data_dir,num2str(0),num2str(r));
+    else
+        file_dir{r} = strcat(data_dir,num2str(r));
+    end
+end
+
+data_n = {};
+for f = 1:no_runs
+    fs = spm_select('List', file_dir{f}, '^rM','.nii');
+    files = cellstr([repmat([file_dir{f} filesep], size(fs,1), 1) fs, repmat(',1',size(fs,1),1)]);
+    data_n = vertcat(data_n,files);
+end
+%% Fill matlabbatch
+
+normalise.matlabbatch{1}.spm.spatial.normalise.write.subj.def = source_file_s;
+normalise.matlabbatch{1}.spm.spatial.normalise.write.subj.resample = data_n;
+
 normalise.matlabbatch{1}.spm.spatial.normalise.write.woptions.bb = [-78 -112 -70
-                                                                  78 76 85];
-normalise.matlabbatch{1}.spm.spatial.normalise.write.woptions.vox = [1 1 3];
+                                                          78 76 85];
+normalise.matlabbatch{1}.spm.spatial.normalise.write.woptions.vox = [2 2 2];
 normalise.matlabbatch{1}.spm.spatial.normalise.write.woptions.interp = 4;
 normalise.matlabbatch{1}.spm.spatial.normalise.write.woptions.prefix = 'w';
 
