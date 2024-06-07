@@ -60,7 +60,8 @@ segmentation.matlabbatch{1}.spm.spatial.preproc.warp.samp = 3;
 segmentation.matlabbatch{1}.spm.spatial.preproc.warp.write = [0 1];
 segmentation.matlabbatch{1}.spm.spatial.preproc.warp.vox = NaN;
 segmentation.matlabbatch{1}.spm.spatial.preproc.warp.bb = [NaN NaN NaN
-                                                      NaN NaN NaN];
+                                              NaN NaN NaN];
+
 spm_jobman('run', segmentation.matlabbatch);
 
 clear matlabbatch
