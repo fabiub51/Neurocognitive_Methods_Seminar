@@ -20,8 +20,8 @@ end
 
 data_n = {};
 for f = 1:no_runs
-    fs = spm_select('List', file_dir{f}, '^rM','.nii');
-    files = cellstr([repmat([file_dir{f} filesep], size(fs,1), 1) fs, repmat(',1',size(fs,1),1)]);
+    fs = spm_select('expand', fullfile(file_dir{f},strcat('rsub-001_task-BTP_run-0',num2str(f),'_bold.nii')));
+    files = cellstr(fs);
     data_n = vertcat(data_n,files); % Here, compared to realignment, we need a cell array with the dimensions of all images x 1 (e.g. for ...
     % participant 4: 2520x1
 end
