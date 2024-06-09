@@ -1,7 +1,7 @@
 function B02_coregister(data_dir, source_dir)
 coregister = struct;
 ref_file = spm_select('List', data_dir, '^mean');
-source_file = spm_select('List',source_dir,'^M','.nii');
+source_file = spm_select('List',source_dir,'^sub','.nii');
 ref_file_s = cellstr([repmat([data_dir filesep], size(ref_file,1), 1) ref_file, repmat(',1',size(ref_file,1),1)]);
 source_file_s = cellstr([repmat([source_dir filesep], size(source_file,1), 1) source_file, repmat(',1',size(source_file,1),1)]);
         
