@@ -11,8 +11,8 @@ for r = 1:no_runs
 end
 
 for f = 1:no_runs
-    fs = spm_select('List', file_dir{f}, '^M','.nii');
-    files = cellstr([repmat([file_dir{f} filesep], size(fs,1), 1) fs, repmat(',1',size(fs,1),1)]);
+    fs = spm_select('expand', fullfile(file_dir{f},strcat('sub-001_task-BTP_run-0',num2str(f),'_bold.nii')));
+    files = cellstr(fs);
     data{f} = files; % Building the cell array with all the filenames (7x360)
 
 end 
