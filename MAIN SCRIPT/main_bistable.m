@@ -42,7 +42,7 @@ end
 %% Coregistration
 
 for i = 1:length(subs)
-        ref_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-');
+        ref_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-01');
         source_dir = strcat(pre_data_dir,num2str(subs(i)),'/anat');
         switch v(2)
             case 1
