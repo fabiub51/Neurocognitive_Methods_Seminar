@@ -1,4 +1,4 @@
-function B04_normalise(data_dir,source_dir,no_runs)
+function B04_normalise(data_dir,source_dir,no_runs, sub_no)
 
 normalise = struct; 
 
@@ -20,7 +20,7 @@ end
 
 data_n = {};
 for f = 1:no_runs
-    fs = spm_select('expand', fullfile(file_dir{f},strcat('rsub-001_task-BTP_run-0',num2str(f),'_bold.nii')));
+    fs = spm_select('expand', fullfile(file_dir{f},strcat('rsub-00',num2str(sub_no),'_task-BTP_run-0',num2str(f),'_bold.nii')));
     files = cellstr(fs);
     data_n = vertcat(data_n,files); % Here, compared to realignment, we need a cell array with the dimensions of all images x 1 (e.g. for ...
     % participant 4: 2520x1
