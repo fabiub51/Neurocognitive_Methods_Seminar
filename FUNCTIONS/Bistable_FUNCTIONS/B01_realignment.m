@@ -1,4 +1,4 @@
-function B01_realignment(data_dir,no_runs)
+function B01_realignment(data_dir,no_runs,sub_no)
 %% Creating the correct cell array to pass into the matlabbatch
 
 file_dir = {}; %creating the directory of the files for every run
@@ -11,7 +11,7 @@ for r = 1:no_runs
 end
 
 for f = 1:no_runs
-    fs = spm_select('expand', fullfile(file_dir{f},strcat('sub-001_task-BTP_run-0',num2str(f),'_bold.nii')));
+    fs = spm_select('expand', fullfile(file_dir{f},strcat('sub-00',num2str(sub_no),'_task-BTP_run-0',num2str(f),'_bold.nii')));
     files = cellstr(fs);
     data{f} = files; % Building the cell array with all the filenames (7x360)
 
