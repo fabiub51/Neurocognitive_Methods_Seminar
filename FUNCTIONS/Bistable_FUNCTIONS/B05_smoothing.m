@@ -1,4 +1,4 @@
-function B05_smoothing(data_dir,no_runs)
+function B05_smoothing(data_dir,no_runs, sub_no)
 %% Functional images
 
 file_dir = {};
@@ -10,11 +10,11 @@ for r = 1:no_runs
     end
 end
 
-data_n = {};
+data_s = {};
 for f = 1:no_runs
-    fs = spm_select('expand', fullfile(file_dir{f},strcat('wrsub-001_task-BTP_run-0',num2str(f),'_bold.nii')));
+    fs = spm_select('expand', fullfile(file_dir{f},strcat('wrsub-00',num2str(sub_no),'_task-BTP_run-0',num2str(f),'_bold.nii')));
     files = cellstr(fs);
-    data_n = vertcat(data_n,files); % Here, compared to realignment, we need a cell array with the dimensions of all images x 1 (e.g. for ...
+    data_s = vertcat(data_s,files); % Here, compared to realignment, we need a cell array with the dimensions of all images x 1 (e.g. for ...
     % participant 4: 2520x1
 end
 
