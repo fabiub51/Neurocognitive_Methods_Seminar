@@ -12,7 +12,7 @@ addpath(genpath([pwd,'/SPM12'])) %This ensures your SPM12 is loaded and running
 v = [1,1,1,1,1]; 
 
 %all participants
-subs = [1,3,4]; 
+subs = [4]; 
 runs = [1,2,3,4,5,6,7]; % These are the 6 functional runs + the localizer
 
 %% Establishing directories where the data are
@@ -35,7 +35,7 @@ for i = 1:length(subs)
         data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-');
         switch v(1)
             case 1
-                B01_realignment(data_dir,length(runs));
+                B01_realignment(data_dir,length(runs),subs(i));
             otherwise
         end
 end
@@ -68,7 +68,7 @@ for i = 1:length(subs)
         source_dir = strcat(pre_data_dir,num2str(subs(i)),'/anat');
         switch v(4)
             case 1
-                B04_normalise(data_dir,source_dir,length(runs));
+                B04_normalise(data_dir,source_dir,length(runs),subs(i));
             otherwise
         end
 end
@@ -78,7 +78,7 @@ for i = 1:length(subs)
     data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-');    
     switch v(5)
         case 1
-            B05_smoothing(data_dir,length(runs));
+            B05_smoothing(data_dir,length(runs),subs(i));
         otherwise
     end
 end
