@@ -12,7 +12,7 @@ addpath(genpath([pwd,'/SPM12'])) %This ensures your SPM12 is loaded and running
 v = [1,1,1,1,1]; 
 
 %all participants
-subs = [4]; 
+subs = ; 
 runs = [1,2,3,4,5,6,7]; % These are the 6 functional runs + the localizer
 
 %% Establishing directories where the data are
@@ -82,10 +82,25 @@ for i = 1:length(subs)
         otherwise
     end
 end
-%% Specification - first level analysis 
 
-C01_specification(data_dir, class_dir);
+%% Specification - first level analysis - localizer
+
+for i = length(subs)
+    if subs(i) == 1
+        runs = [7 8];
+        data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-'); 
+        func_dir = strcat(pre_data_dir,num2str(subs(i),'/func/'));
+        C01_specification_Felix(func_dir, data_dir, runs, subs(i));
+    else 
+        runs = 7;
+        data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-'); 
+        func_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/');
+        C01_specification(func_dir, data_dir, runs, subs(i));
+    end
+end 
 
 %% Estimation
-
-C02_estimation(class_dir);
+for i = length(subs)
+    output_dir = strcat(func_dir,'1st_level');
+    C02_estimation(output_dir);
+end 
