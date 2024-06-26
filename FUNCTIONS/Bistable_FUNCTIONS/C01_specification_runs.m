@@ -1,4 +1,4 @@
-function C01_specification_Felix(func_dir,data_dir, runs, sub_no)
+function C01_specification_runs(func_dir,data_dir, runs, sub_no)
 
 %% output directory
 cd(func_dir);
