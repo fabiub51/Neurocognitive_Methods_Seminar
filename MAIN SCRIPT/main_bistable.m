@@ -12,12 +12,12 @@ addpath(genpath([pwd,'/SPM12'])) %This ensures your SPM12 is loaded and running
 v = [1,1,1,1,1]; 
 
 %all participants
-subs = ; 
+subs = 1; 
 runs = [1,2,3,4,5,6,7]; % These are the 6 functional runs + the localizer
 
 %% Establishing directories where the data are
-tpm_path = '/Users/fabiusberner/Documents/MATLAB/SPM12/tpm';
-pre_data_dir = '/Users/fabiusberner/Documents/UNI/2. Semester/NMDA practical /Bistable_perception/Derivatives/sub-00';
+tpm_path = 'C:\Users\berne\Documents\MATLAB\spm12\tpm';
+pre_data_dir = 'C:\Users\berne\Documents\Master FU\2. Semester\NMDA practical\Bistable_perception\Derivatives\sub-00';
 
 % This is the folder structure how I understood BIDS: 
 % Bistable perception (Project) 
@@ -83,20 +83,13 @@ for i = 1:length(subs)
     end
 end
 
-%% Specification - first level analysis - localizer
+%% Specification - first level analysis 
 
 for i = length(subs)
-    if subs(i) == 1
-        runs = [7 8];
-        data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-'); 
-        func_dir = strcat(pre_data_dir,num2str(subs(i),'/func/'));
-        C01_specification_Felix(func_dir, data_dir, runs, subs(i));
-    else 
-        runs = 7;
-        data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-'); 
-        func_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/');
-        C01_specification(func_dir, data_dir, runs, subs(i));
-    end
+    runs = [1 2 3 4 5 6];
+    data_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/run-'); 
+    func_dir = strcat(pre_data_dir,num2str(subs(i)),'/func/');
+    C01_specification_runs(func_dir, data_dir, runs, subs(i));
 end 
 
 %% Estimation
